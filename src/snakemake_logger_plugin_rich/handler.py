@@ -1,16 +1,18 @@
 import logging
-from rich.logging import RichHandler
-from rich.progress import (
-    Progress,
-    BarColumn,
-    TextColumn,
-    TimeElapsedColumn,
-    SpinnerColumn,
-)
+
 from rich.console import Console
 from rich.live import Live
+from rich.logging import RichHandler
 from rich.panel import Panel
+from rich.progress import (
+    BarColumn,
+    Progress,
+    SpinnerColumn,
+    TextColumn,
+    TimeElapsedColumn,
+)
 from snakemake_interface_logger_plugins.settings import OutputSettingsLoggerInterface
+
 from snakemake_logger_plugin_rich.event_handler import EventHandler
 
 
@@ -81,14 +83,14 @@ class RichLogHandler(RichHandler):
         try:
             self.event_handler.handle(record)
 
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             self.handleError(
                 logging.LogRecord(
                     name="RichLogHanlder",
                     level=logging.ERROR,
                     pathname="",
                     lineno=0,
-                    msg=f"Error in logging handler: {str(e)}",
+                    msg=f"Error in logging handler: {e!s}",
                     args=(),
                     exc_info=None,
                 )
